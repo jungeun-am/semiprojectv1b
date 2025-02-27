@@ -15,7 +15,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<BoardDTO> readBoard(int cpg) {
-        int stnum = 0;
+        int stnum = (cpg -1) * 25;
 
         return boardMapper.selectBoard(stnum);
     }

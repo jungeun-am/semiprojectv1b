@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @Controller
@@ -17,11 +18,14 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/list")
-    public String list(Model m, int cpg) {
+    public String list(Model m, @RequestParam(defaultValue = "1") int cpg) {
         log.info("board/list 호출!!");
 
         m.addAttribute("bds", boardService.readBoard(cpg));
+        m.addAttribute("cpg", cpg);
+
         return "views/board/list";
+
     }
 
 }
