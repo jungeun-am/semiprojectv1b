@@ -30,4 +30,11 @@ public class BoardController {
 
     }
 
+    @GetMapping("/find")
+    public String find(Model m, String findtype, String findkey,
+                       @RequestParam(defaultValue = "1") int cpg) {
+
+
+        return "views/board/list";
+    }
 }
