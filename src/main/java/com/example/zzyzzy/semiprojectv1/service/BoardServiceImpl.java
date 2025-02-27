@@ -15,9 +15,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<BoardDTO> readBoard(int cpg) {
-
-        // cpg에 따라 시작위치 값 계산
-        int stnum = (cpg - 1) * 25;
+        int stnum = 0;
 
         return boardMapper.selectBoard(stnum);
     }
