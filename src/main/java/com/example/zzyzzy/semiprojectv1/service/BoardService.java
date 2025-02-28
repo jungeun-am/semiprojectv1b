@@ -1,5 +1,6 @@
 package com.example.zzyzzy.semiprojectv1.service;
 
+import com.example.zzyzzy.semiprojectv1.domain.Board;
 import com.example.zzyzzy.semiprojectv1.domain.BoardDTO;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface BoardService {
 
     int countfindBoard(String findtype, String findkey);
 
-}
+    Board readOneBoard(int bno);
+
+   }
