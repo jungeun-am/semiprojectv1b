@@ -9,8 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -33,6 +36,39 @@ public class BoardServiceTest {
 
         // Then
         assertNotNull(results);
+    }
+
+    @Test
+    @DisplayName("BoardService find test")
+    public void findTest() {
+        // Given
+       int cpg = 1;
+       String findtype = "title";
+       String findkey = "레노버";
+
+        // When
+        List<BoardDTO> results = boardService.findBoard(cpg, findtype, findkey);
+
+        // Then
+        assertNotNull(results); // Null 여부 확인 - 리스트일 경우 의미없는 검사 !
+        assertThat(results).isNotEmpty(); // 비어있는지 여부 확인
+        assertThat(results.size()).isGreaterThan(0); // 결과 갯수 확인
+    }
+
+    @Test
+    @DisplayName("BoardService countfind test")
+    public void countfindTest() {
+        // Given
+
+       String findtype = "title";
+       String findkey = "레노버";
+
+        // When
+        int results = boardService.countfindBoard(findtype, findkey);
+
+        // Then
+
+        assertThat(results).isGreaterThan(0); // 결과 갯수 확인
     }
 
 }
