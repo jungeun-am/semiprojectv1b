@@ -30,7 +30,7 @@
 
                 <div class="form-floating my-2">
                     <input type="text" name="userid" id="userid" class="form-control"
-                       placeholder="아이디" readonly values="abc123">
+                       placeholder="아이디" readonly value="abc123">
                     <label for="userid" class="form-label">아이디</label>
                 </div>
 
@@ -43,12 +43,12 @@
 
                 <div class="form-floating my-2">
                     <textarea name="contents" id="contents" class="form-control h-100"
-                              rows="10" placeholder="본문글" required> </textarea>
+                              rows="10" placeholder="본문글" required></textarea>
                     <label for="contents" class="form-label">본문글</label>
                 </div>
 
                 <div class="my-2 d-flex justify-content-center">
-                    <div class="g-recaptcha" data-sitekey="6Le7xOgqAAAAAOsmtI02LRQTGj1fxWYgSSssxgdg"></div>
+                    <div class="g-recaptcha" id="recaptcha" data-sitekey="6Le7xOgqAAAAAOsmtI02LRQTGj1fxWYgSSssxgdg"></div>
                 </div>
 
                 <div class="my-2 d-flex justify-content-between">
@@ -67,19 +67,19 @@
     </th:block>
 
     <th:block layout:fragment="script">
-        <script src="/js/member.js"></script>
+        <script src="/js/board.js"></script>
         <script>
-            const joinfrm = document.querySelector('#joinfrm');
+            const boardfrm = document.querySelector('#boardfrm');
 
-            joinfrm.addEventListener("submit", (e) => {
+            boardfrm.addEventListener("submit", (e) => {
                 e.preventDefault(); // submit 버튼 기능 중지
 
                 clearErrorMessages();  // 에러메세지 초기화
 
                 // 입력 요소 유효성 검사
-                let isValid = validInputs(joinfrm);
+                let isValid = validBoard(boardfrm);
 
-                if (isValid) submitJoinfrm(joinfrm);
+                if (isValid) submitBoardfrm(boardfrm);
             });
         </script>
 
