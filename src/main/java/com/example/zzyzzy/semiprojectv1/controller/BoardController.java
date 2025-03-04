@@ -1,11 +1,17 @@
 package com.example.zzyzzy.semiprojectv1.controller;
 
+import com.example.zzyzzy.semiprojectv1.domain.NewBoardDTO;
 import com.example.zzyzzy.semiprojectv1.service.BoardService;
+import com.example.zzyzzy.semiprojectv1.service.GoogleRecaptchaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -18,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 public class BoardController {
 
     private final BoardService boardService;
+    private final GoogleRecaptchaService googleRecaptchaService;
 
     @GetMapping("/list")
     public String list(Model m, @RequestParam(defaultValue = "1") int cpg,
@@ -63,6 +70,24 @@ public class BoardController {
     @GetMapping("/write")
     public String write() {
         return "views/board/write";
+    }
+
+    @PostMapping("/write")
+    public ResponseEntity<?> writeok(NewBoardDTO newBoardDTO,
+                                     @RequestParam("g-recaptcha-response") String gRecaptchaResponse) {
+        ResponseEntity<?> response = ResponseEntity.internalServerError().build();
+        log.info("submit된 게시글 정보: {}", newBoardDTO);
+        log.info("submit된 recaptcha 응답코드: {}", gRecaptchaResponse);
+
+        try {
+            if (!googleRecaptchaService.verifyRecaptcha(gRecaptchaResponse)) {
+                throw new IllegalStateException("자동가입방지 코드 오류!!");
+            }
+        } catch (IllegalStateException e) {
+            response = ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return response;
+
     }
 
 }
