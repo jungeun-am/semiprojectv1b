@@ -28,7 +28,7 @@ public class GoogleRecaptchaService {
     private final RestTemplate restTemplate;
 
     private final String verifyURL = "https://www.google.com/recaptcha/api/siteverify";
-    private final String secretKey = "6Le7xOgqAAAAAAyFhFk_P6HGWz7EDRHzWnLAmdT7";
+    private final String secretKey = System.getenv("recaptcha.secretkey");
 
     public boolean verifyRecaptcha_old(String gRecaptchaResponse) {
         boolean verfiyResult = false;
