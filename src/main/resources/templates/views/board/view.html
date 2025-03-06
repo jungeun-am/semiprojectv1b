@@ -46,7 +46,7 @@
                     <button type="button" class="btn btn-light">
                         다음게시물</button></td>
                     <td class="text-end">
-                        <button type="button" class="btn btn-primary" id="newbdbtn">
+                        <button type="button" class="btn btn-primary" id="newbdbtn" th:if="${session.loginUser ne null}">
                             새글쓰기</button></td>
                 </tr>
                 </thead>
@@ -169,7 +169,7 @@
 
             const bno = [[${param.bno[0]}]];
 
-            newbdbtn.addEventListener('click',(e) => {
+            newbdbtn?.addEventListener('click',(e) => {
                     location.href = `/board/write`;
             });
 
@@ -183,7 +183,7 @@
                     location.href = `/board/list`;
             });
 
-            replybtn.addEventListener('click', (e) => {
+            replybtn?.addEventListener('click', (e) => {
                     const comments = document.querySelector('#comments');
                     const replyfrm = document.querySelector('#replyfrm');
                     if(comments.value === ''){

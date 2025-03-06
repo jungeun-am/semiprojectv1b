@@ -92,7 +92,8 @@
             let findkey =document.querySelector("#findkey");
             let newbdbtn = document.querySelector("#newbdbtn");
 
-            newbdbtn.addEventListener('click',(e) => {
+            // 옵셔널 체이닝
+            newbdbtn?.addEventListener('click',(e) => {
                 location.href = `/board/write`;
             });
 
