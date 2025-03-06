@@ -3,6 +3,7 @@ package com.example.zzyzzy.semiprojectv1.board;
 import com.example.zzyzzy.semiprojectv1.domain.Board;
 import com.example.zzyzzy.semiprojectv1.domain.BoardDTO;
 import com.example.zzyzzy.semiprojectv1.domain.BoardListDTO;
+import com.example.zzyzzy.semiprojectv1.domain.BoardReplyDTO;
 import com.example.zzyzzy.semiprojectv1.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
@@ -81,12 +82,13 @@ public class BoardServiceTest {
         int bno = 3000;
 
         // When
-        Board results = boardService.readOneBoard(bno);
+       // Board results = boardService.readOneBoard(bno);
+        BoardReplyDTO results = boardService.readOneBoardReply(bno);
 
         // Then
 
         assertThat(results).isNotNull(); // 결과 갯수 확인
-        assertThat(results.getUserid()).isNotNull(); // 결과 갯수 확인
+        assertThat(results.getBd().getUserid()).isNotNull(); // 결과 갯수 확인
     }
 
 }
