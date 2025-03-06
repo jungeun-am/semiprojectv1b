@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @Slf4j
 @Controller
@@ -70,12 +71,15 @@ public class BoardController {
     }
 
     @GetMapping("/write")
-    public String write(Model m) {
-        
-        // 시스템 환경변수에 저장된 사이트키 불러옴
-        m.addAttribute("sitekey", System.getenv("recaptcha.sitekey"));
-        
-        return "views/board/write";
+    public String write(Model m, HttpSession session) {
+        String returnPage = "redirect:/member/login";
+
+        if(session.getAttribute("loginUser") != null) {
+            // 시스템 환경변수에 저장된 사이트키 불러옴
+            m.addAttribute("sitekey", System.getenv("recaptcha.sitekey"));
+            returnPage = "views/board/write";
+        }
+        return returnPage;
     }
 
     @PostMapping("/write")
