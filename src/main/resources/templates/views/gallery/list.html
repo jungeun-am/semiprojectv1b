@@ -36,8 +36,8 @@
 
                 <div class="col-10 card" style="width: 18rem"
                 th:each="gal : ${gals}">
-                    <a>
-                        <img src="http://localhost/cdn/_small/cowmeat01_small.jpg"
+                    <a th:href="|/gallery/view/${gal.gno}|">
+                        <img th:src="|http://localhost/cdn/_small/${gal.simgname}|"
                              class="card-img-top" alt="..."></a>
 
                     <div class="card-body">
@@ -53,6 +53,18 @@
             </div><!-- 갤러리 이미지 리스트 -->
 
         </main>
+    </th:block>
+
+    <th:block layout:fragment="script">
+        <script src="/js/gallery.js"></script>
+        <script th:inline="javascript">
+            let newgalbtn = document.querySelector("#newgalbtn");
+
+
+            newgalbtn?.addEventListener('click',(e) => {
+                location.href = `/gallery/write`;
+            });
+        </script>
     </th:block>
 
 </html>
