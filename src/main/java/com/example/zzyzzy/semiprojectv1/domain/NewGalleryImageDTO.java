@@ -3,8 +3,8 @@ package com.example.zzyzzy.semiprojectv1.domain;
 import lombok.Builder;
 import lombok.Data;
 
-@Builder
 @Data
+@Builder
 public class NewGalleryImageDTO {
 
     private String imgname;

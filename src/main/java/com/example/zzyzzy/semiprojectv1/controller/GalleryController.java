@@ -78,8 +78,8 @@ public class GalleryController {
             if(galleryService.newGalleryImage(gal, ginames)) {
                 response = ResponseEntity.ok().build();
             }
-        } catch (IllegalStateException e) {
-            response = ResponseEntity.badRequest().body(e.getMessage());
+        } catch (IllegalStateException ex) {
+            response = ResponseEntity.badRequest().body(ex.getMessage());
         }
 
      return response;
