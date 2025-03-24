@@ -1,7 +1,7 @@
 package com.example.zzyzzy.semiprojectv1.domain;
 
-import groovy.transform.builder.Builder;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "users")
 @Data @Builder
+@AllArgsConstructor
 @NoArgsConstructor
-
 public class User {
 
     @Id
@@ -29,7 +29,7 @@ public class User {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String email;
 
     @CreationTimestamp
