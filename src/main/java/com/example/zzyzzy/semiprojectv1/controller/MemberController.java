@@ -1,5 +1,8 @@
 package com.example.zzyzzy.semiprojectv1.controller;
+
+import com.example.zzyzzy.semiprojectv1.domain.Member;
 import com.example.zzyzzy.semiprojectv1.domain.MemberDTO;
+import com.example.zzyzzy.semiprojectv1.repository.MemberRepository;
 import com.example.zzyzzy.semiprojectv1.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -102,15 +105,17 @@ public class MemberController {
         return returnUrl;
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();  // 세션 제거
-
-        return "redirect:/";
-    }
+    // 스프링 시큐리티가 자동으로 처리 - 생략
+//    @GetMapping("/logout")
+//    public String logout(HttpSession session) {
+//        session.invalidate();  // 세션 제거
+//
+//        return "redirect:/";
+//    }
 
     @GetMapping("/loginfail")
     public String loginfail() {
         return "views/member/loginfail";
     }
+
 }
