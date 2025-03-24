@@ -21,7 +21,7 @@ public interface BoardRepository {
     @Select("select count(bno) cntbd from boards")
     int countBoard();
 
-   // List<BoardDTO> selectFindBoard(int stnum, int pageSize, String findtype, String findkey);
+    //List<BoardDTO> selectFindBoard(int stnum, int pageSize, String findtype, String findkey);
     List<BoardDTO> selectFindBoard(Map<String, Object> params);
 
     int countFindBoard(Map<String, Object> params);
@@ -32,17 +32,15 @@ public interface BoardRepository {
     @Update("update boards set views = views + 1 where bno = #{bno}")
     void updateViewOne(int bno);
 
-    @Insert("insert into boards(title,userid,contents) values (#{title}, #{userid}, #{contents})")
+    @Insert("insert into boards (title, userid, contents) values (#{title}, #{userid}, #{contents})")
     int insertBoard(NewBoardDTO newBoardDTO);
 
-    @Insert("insert into replys(userid,comments, ref, pno) values (#{userid}, #{comments}, last_insert_id()+1, #{pno})")
+    @Insert("insert into replys (userid, comments, ref, pno) values (#{userid}, #{comments}, last_insert_id()+1, #{pno})")
     int insertReply(NewReplyDTO newReplyDTO);
 
     @Select("select * from replys where pno = #{pno} order by ref")
     List<Reply> selectReply(int pno);
 
-    @Insert("insert into replys(userid,comments, ref, pno) values (#{userid}, #{comments}, #{ref}, #{pno})")
+    @Insert("insert into replys (userid, comments, ref, pno) values (#{userid}, #{comments}, #{ref}, #{pno})")
     int insertComment(NewReplyDTO newReplyDTO);
-
-
 }
