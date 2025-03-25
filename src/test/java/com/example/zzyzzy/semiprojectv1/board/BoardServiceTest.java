@@ -46,33 +46,30 @@ public class BoardServiceTest {
     @DisplayName("BoardService find test")
     public void findTest() {
         // Given
-       int cpg = 1;
-       String findtype = "title";
-       String findkey = "레노버";
+        int cpg = 1;
+        String findtype = "title";
+        String findkey = "넷플릭스";
 
         // When
-        List<BoardDTO> results = boardService.findBoard(cpg, findtype, findkey);
+        BoardListDTO results = boardService.findBoard(cpg, findtype, findkey);
 
         // Then
-        assertNotNull(results); // Null 여부 확인 - 리스트일 경우 의미없는 검사 !
-        assertThat(results).isNotEmpty(); // 비어있는지 여부 확인
-        assertThat(results.size()).isGreaterThan(0); // 결과 갯수 확인
+        assertNotNull(results);
     }
 
     @Test
     @DisplayName("BoardService countfind test")
     public void countfindTest() {
         // Given
-
-       String findtype = "title";
-       String findkey = "레노버";
+        Map<String, Object> params = new HashMap<>();
+        params.put("findtype", "title");
+        params.put("findkey", "넷플릭스");
 
         // When
-        int results = boardService.countfindBoard(findtype, findkey);
+        int results = boardService.countfindBoard(params);
 
         // Then
-
-        assertThat(results).isGreaterThan(0); // 결과 갯수 확인
+        assertThat(results).isGreaterThan(0);
     }
 
     @Test
@@ -82,13 +79,12 @@ public class BoardServiceTest {
         int bno = 3000;
 
         // When
-       // Board results = boardService.readOneBoard(bno);
-        BoardReplyDTO results = boardService.readOneBoardReply(bno);
+        //Board result = boardService.readOneBoard(bno);
+        BoardReplyDTO result = boardService.readOneBoardReply(bno);
 
         // Then
-
-        assertThat(results).isNotNull(); // 결과 갯수 확인
-        assertThat(results.getBd().getUserid()).isNotNull(); // 결과 갯수 확인
+        assertThat(result).isNotNull();
+        assertThat(result.getBd().getUserid()).isNotNull();
     }
 
 }

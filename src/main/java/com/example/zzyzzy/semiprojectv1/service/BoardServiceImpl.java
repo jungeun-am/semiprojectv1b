@@ -13,68 +13,63 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardMapper;
     @Value("${board.page-size}") private int pageSize;
 
-    @Transactional
     @Override
     public BoardListDTO readBoard(int cpg) {
+        // cpg에 따라 시작위치값 계산
         int stnum = (cpg - 1) * pageSize;
         int totalItems = boardMapper.countBoard();
         List<BoardDTO> boards = boardMapper.selectBoard(stnum, pageSize);
 
         return new BoardListDTO(cpg, totalItems, pageSize, boards);
     }
+
     @Transactional
     @Override
     public BoardReplyDTO readOneBoardReply(int bno) {
         boardMapper.updateViewOne(bno);
-        Board bd = boardMapper.selectOneBoard(bno) ;
-        List<Reply> rps = boardMapper.selectReply(bno);;
+        Board bd = boardMapper.selectOneBoard(bno);
+        List<Reply> rps = boardMapper.selectReply(bno);
 
-        return new BoardReplyDTO(bd,rps);
+        return new BoardReplyDTO(bd, rps);
     }
 
     @Override
-    public List<BoardDTO> findBoard(int cpg, String findtype, String findkey) {
-        Map<String, Object> params = new HashMap<>();
+    public BoardListDTO findBoard(int cpg, String findtype, String findkey) {
+        int stnum = (cpg - 1) * pageSize;
 
-        params.put("stnum", (cpg - 1)* pageSize);
+        Map<String, Object> params = new HashMap<>();
+        params.put("stnum", stnum);
         params.put("pageSize", pageSize);
         params.put("findtype", findtype);
         params.put("findkey", findkey);
 
-        return boardMapper.selectFindBoard(params);
+        int totalItems = countfindBoard(params);
+        List<BoardDTO> boards = boardMapper.selectFindBoard(params);
+
+        return new BoardListDTO(cpg, totalItems, pageSize, boards);
     }
 
     @Override
-    public int countfindBoard(String findtype, String findkey) {
-        Map<String, Object> params = new HashMap<>();
-
-        params.put("pageSize", pageSize);
-        params.put("findtype", findtype);
-        params.put("findkey", findkey);
+    public int countfindBoard(Map<String, Object> params) {
 
         return boardMapper.countFindBoard(params);
     }
 
     //@Override
     //public Board readOneBoard(int bno) {
-    //    return null;
+    //     return boardMapper.selectOneBoard(bno);
     //}
 
-    // @Override
-    //public Board readOneBoard(int bno) {
-      //  return boardMapper.selectOneBoard(bno);
-  //  }
-
     //@Override
-    // public void readOneView(int bno) {
-   //     boardMapper.updateViewOne(bno);
-
-   // }
+    //public void readOneView(int bno) {
+    //    boardMapper.updateViewOne(bno);
+    //}
 
     @Override
     public boolean newBoard(NewBoardDTO newBoardDTO) {
@@ -91,13 +86,11 @@ public class BoardServiceImpl implements BoardService {
     //@Override
     //public List<Reply> readReply(int pno) {
     //    return boardMapper.selectReply(pno);
-  //  }
+    //}
 
     @Override
     public boolean newComment(NewReplyDTO newReplyDTO) {
         int result = boardMapper.insertComment(newReplyDTO);
         return result > 0;
     }
-
-
 }
