@@ -1,6 +1,7 @@
 package com.example.zzyzzy.semiprojectv1.apicontroller;
 
 import com.example.zzyzzy.semiprojectv1.domain.BoardListDTO;
+import com.example.zzyzzy.semiprojectv1.domain.BoardReplyDTO;
 import com.example.zzyzzy.semiprojectv1.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,4 +35,11 @@ public class ApiBoardController {
         return new ResponseEntity<>(boardListDTO, HttpStatus.OK);
     }
 
+    @GetMapping("/view")
+    public  ResponseEntity<BoardReplyDTO> view(Model m, int bno) {
+
+      BoardReplyDTO boardReplyDTO = boardService.readOneBoardReply(bno);
+
+        return new ResponseEntity<>(boardReplyDTO, HttpStatus.OK);
+    }
 }
